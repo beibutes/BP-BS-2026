@@ -133,11 +133,14 @@ async function renderRsvp() {
   const box = document.getElementById("rsvp");
   if (!box) return;
   const store = window.BookingStore;
-  const name = store.rsvpGet ? await store.rsvpGet(getVisitorId()) : null;
+  const r = store.rsvpGet ? await store.rsvpGet(getVisitorId()) : null;
 
-  if (name) {
+  if (r && r.name) {
+    const partnerNote = r.with_partner
+      ? ' <span class="rsvp-partner">+ вторая половинка</span>'
+      : "";
     box.innerHTML = `
-      <p class="rsvp-status">🎉 Спасибо! Вы подтвердили участие как <b>${name}</b></p>
+      <p class="rsvp-status">🎉 Спасибо! Вы подтвердили участие как <b>${r.name}</b>${partnerNote}</p>
       <button class="btn btn-ghost" id="rsvp-cancel">Отменить участие</button>`;
     document.getElementById("rsvp-cancel").addEventListener("click", async () => {
       await store.rsvpUnset(getVisitorId());
@@ -145,14 +148,20 @@ async function renderRsvp() {
     });
   } else {
     box.innerHTML = `
-      <p class="rsvp-q">Придёте на праздник?</p>
-      <button class="btn" id="rsvp-yes">✋ Я приду</button>`;
-    document.getElementById("rsvp-yes").addEventListener("click", async () => {
+      <p class="rsvp-q">Придёте на мероприятие?</p>
+      <div class="rsvp-btns">
+        <button class="btn" id="rsvp-partner">💑 Приду со второй половинкой</button>
+        <button class="btn btn-ghost" id="rsvp-yes">✋ Приду один(а)</button>
+      </div>`;
+
+    const confirm = async (withPartner) => {
       const n = prompt("Как вас записать? Имя и фамилия:");
       if (!n || !n.trim()) return;
-      await store.rsvpSet(getVisitorId(), n.trim());
+      await store.rsvpSet(getVisitorId(), n.trim(), withPartner);
       renderRsvp();
-    });
+    };
+    document.getElementById("rsvp-partner").addEventListener("click", () => confirm(true));
+    document.getElementById("rsvp-yes").addEventListener("click", () => confirm(false));
   }
 }
 

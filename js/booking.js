@@ -46,8 +46,11 @@ const LocalStore = {
     const owners = JSON.parse(localStorage.getItem("birthday_owners") || "{}");
     return Object.keys(owners).filter((k) => owners[k] === ownerId);
   },
-  async rsvpSet(visitorId, name) {
-    localStorage.setItem("birthday_rsvp", JSON.stringify({ visitorId, name }));
+  async rsvpSet(visitorId, name, withPartner) {
+    localStorage.setItem(
+      "birthday_rsvp",
+      JSON.stringify({ name, with_partner: !!withPartner })
+    );
     return true;
   },
   async rsvpUnset() {
@@ -55,12 +58,13 @@ const LocalStore = {
     return true;
   },
   async rsvpGet() {
-    const r = JSON.parse(localStorage.getItem("birthday_rsvp") || "null");
-    return r ? r.name : null;
+    return JSON.parse(localStorage.getItem("birthday_rsvp") || "null");
   },
   async getRsvps() {
     const r = JSON.parse(localStorage.getItem("birthday_rsvp") || "null");
-    return r ? [{ name: r.name, created_at: new Date().toISOString() }] : [];
+    return r
+      ? [{ name: r.name, with_partner: r.with_partner, created_at: new Date().toISOString() }]
+      : [];
   },
   onChange(cb) {
     // синхронизация между вкладками одного браузера
@@ -138,10 +142,11 @@ function makeSupabaseStore() {
       }
       return data || [];
     },
-    async rsvpSet(visitorId, name) {
+    async rsvpSet(visitorId, name, withPartner) {
       const { error } = await sb.rpc("rsvp_set", {
         p_visitor_id: visitorId,
         p_name: name,
+        p_with_partner: !!withPartner,
       });
       if (error) console.error("Supabase rsvpSet:", error.message);
       return !error;
@@ -157,12 +162,12 @@ function makeSupabaseStore() {
         console.error("Supabase rsvpGet:", error.message);
         return null;
       }
-      return data || null;
+      return data || null; // { name, with_partner } | null
     },
     async getRsvps() {
       const { data, error } = await sb
         .from("rsvps")
-        .select("name,created_at")
+        .select("name,with_partner,created_at")
         .order("created_at", { ascending: false });
       if (error) {
         console.error("Supabase getRsvps:", error.message);

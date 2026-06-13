@@ -87,6 +87,21 @@ body {
 .hero-meta b {
   color: var(--gold);
 }
+.map-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.15s ease;
+}
+.map-link:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
 
 /* ── Countdown ── */
 #countdown {
@@ -157,8 +172,20 @@ body {
 .rsvp-status b {
   color: var(--gold);
 }
+.rsvp-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
 .rsvp-card .btn {
   margin-top: 0;
+}
+.rsvp-partner {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 14px;
+  white-space: nowrap;
 }
 .rsvp-card .btn-ghost {
   color: rgba(255, 255, 255, 0.85);
