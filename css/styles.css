@@ -232,12 +232,44 @@ body {
   color: var(--muted);
 }
 
+.tier {
+  max-width: 1080px;
+  margin: 0 auto 44px;
+}
+.tier-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e6ddfb;
+}
+.tier-head h3 {
+  font-size: 22px;
+  color: var(--ink);
+}
+.tier-range {
+  font-size: 14px;
+  color: var(--muted);
+}
 .grid {
   max-width: 1080px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 22px;
+}
+.top-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 11px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(36, 27, 58, 0.25);
 }
 
 .card {

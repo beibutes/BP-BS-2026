@@ -69,26 +69,42 @@ function cardTemplate(item) {
     footer = `<p class="reserved-note">✓ Уже забронировано</p>`;
   }
 
+  const imgSrc = item.img || fallback;
   return `
   <article class="card ${isReserved ? "is-reserved" : ""} ${isMine ? "is-mine" : ""}" data-id="${item.id}">
     <div class="card-img">
-      <img src="${item.img}" alt="${item.title}"
+      <img src="${imgSrc}" alt="${item.title}"
            loading="lazy"
            onerror="this.onerror=null;this.src='${fallback}'">
+      ${item.top ? '<span class="top-badge">⭐ Выбор именинника</span>' : ""}
       ${isReserved ? '<span class="badge">Забронировано</span>' : ""}
     </div>
     <div class="card-body">
       <h3>${item.title}</h3>
-      <p class="card-desc">${item.desc}</p>
-      <p class="price">${formatPrice(item.price)}</p>
+      ${item.desc ? `<p class="card-desc">${item.desc}</p>` : '<p class="card-desc"></p>'}
+      <p class="price">${item.priceText || ""}</p>
       ${footer}
     </div>
   </article>`;
 }
 
 function renderWishlist() {
-  const grid = document.getElementById("wishlist");
-  grid.innerHTML = window.WISHLIST.map(cardTemplate).join("");
+  const container = document.getElementById("wishlist");
+  const tiers = window.WISHLIST_TIERS || [{ key: null, label: "", range: "" }];
+  container.innerHTML = tiers
+    .map((t) => {
+      const items = window.WISHLIST.filter((i) => i.tier === t.key);
+      if (!items.length) return "";
+      return `
+        <div class="tier">
+          <div class="tier-head">
+            <h3>${t.label}</h3>
+            <span class="tier-range">${t.range}</span>
+          </div>
+          <div class="grid">${items.map(cardTemplate).join("")}</div>
+        </div>`;
+    })
+    .join("");
 }
 
 async function refresh() {
