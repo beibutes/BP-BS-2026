@@ -23,16 +23,35 @@ async function checkAuth() {
 
 $("#login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  $("#login-error").textContent = "";
-  const { error } = await auth.signInWithPassword({
-    email: $("#email").value.trim(),
-    password: $("#pass").value,
-  });
-  if (error) {
-    $("#login-error").textContent =
-      "Не удалось войти: " + (error.message || "проверьте email и пароль");
-  } else {
-    showDashboard();
+  const btn = $("#login-form button[type=submit]");
+  const err = $("#login-error");
+  err.textContent = "";
+
+  if (!auth) {
+    err.textContent = "Ошибка: Supabase не загрузился. Обновите страницу.";
+    return;
+  }
+  const email = $("#email").value.trim();
+  const pass = $("#pass").value;
+  if (!email || !pass) {
+    err.textContent = "Введите email и пароль.";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Вход…";
+  try {
+    const { error } = await auth.signInWithPassword({ email, password: pass });
+    if (error) {
+      err.textContent = "Не удалось войти: " + (error.message || "проверьте данные");
+    } else {
+      showDashboard();
+    }
+  } catch (ex) {
+    err.textContent = "Сбой входа: " + (ex && ex.message ? ex.message : ex);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Войти";
   }
 });
 
