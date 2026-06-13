@@ -153,6 +153,9 @@
   font-size: 14px;
   padding: 8px 0;
 }
+.row-declined {
+  opacity: 0.55;
+}
 .btn-mini {
   border: 1px solid #ddd6f0;
   background: #fff;

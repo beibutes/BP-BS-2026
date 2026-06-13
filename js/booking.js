@@ -46,10 +46,10 @@ const LocalStore = {
     const owners = JSON.parse(localStorage.getItem("birthday_owners") || "{}");
     return Object.keys(owners).filter((k) => owners[k] === ownerId);
   },
-  async rsvpSet(visitorId, name, withPartner) {
+  async rsvpSet(visitorId, name, withPartner, coming) {
     localStorage.setItem(
       "birthday_rsvp",
-      JSON.stringify({ name, with_partner: !!withPartner })
+      JSON.stringify({ name, with_partner: !!withPartner, coming: coming !== false })
     );
     return true;
   },
@@ -63,7 +63,7 @@ const LocalStore = {
   async getRsvps() {
     const r = JSON.parse(localStorage.getItem("birthday_rsvp") || "null");
     return r
-      ? [{ name: r.name, with_partner: r.with_partner, created_at: new Date().toISOString() }]
+      ? [{ name: r.name, with_partner: r.with_partner, coming: r.coming, created_at: new Date().toISOString() }]
       : [];
   },
   onChange(cb) {
@@ -142,11 +142,12 @@ function makeSupabaseStore() {
       }
       return data || [];
     },
-    async rsvpSet(visitorId, name, withPartner) {
+    async rsvpSet(visitorId, name, withPartner, coming) {
       const { error } = await sb.rpc("rsvp_set", {
         p_visitor_id: visitorId,
         p_name: name,
         p_with_partner: !!withPartner,
+        p_coming: coming !== false,
       });
       if (error) console.error("Supabase rsvpSet:", error.message);
       return !error;
@@ -162,12 +163,12 @@ function makeSupabaseStore() {
         console.error("Supabase rsvpGet:", error.message);
         return null;
       }
-      return data || null; // { name, with_partner } | null
+      return data || null; // { name, with_partner, coming } | null
     },
     async getRsvps() {
       const { data, error } = await sb
         .from("rsvps")
-        .select("name,with_partner,created_at")
+        .select("name,with_partner,coming,created_at")
         .order("created_at", { ascending: false });
       if (error) {
         console.error("Supabase getRsvps:", error.message);

@@ -105,14 +105,17 @@ function renderStats(bookings, visits, rsvps) {
   const totalItems = (window.WISHLIST || []).length;
   const lastVisit = visits.length ? fmtDate(visits[0].created_at) : "—";
 
-  const withPartner = rsvps.filter((r) => r.with_partner).length;
-  const people = rsvps.length + withPartner; // каждое подтверждение = 1, +1 за вторую половинку
+  const coming = rsvps.filter((r) => r.coming);
+  const declined = rsvps.filter((r) => !r.coming);
+  const withPartner = coming.filter((r) => r.with_partner).length;
+  const people = coming.length + withPartner; // каждый придёт = 1, +1 за вторую половинку
   const cards = [
     {
       label: "Придут гостей",
       value: people,
-      hint: `${rsvps.length} подтвердили · из них ${withPartner} со 2-й половинкой`,
+      hint: `${coming.length} подтвердили · из них ${withPartner} со 2-й половинкой`,
     },
+    { label: "Не придут", value: declined.length, hint: 'ответили «не смогу»' },
     { label: "Уникальных гостей", value: uniqueVisitors, hint: "по устройствам/браузерам" },
     { label: "Всего заходов", value: visits.length, hint: "сессий на сайте" },
     { label: "Забронировано", value: `${bookings.length} / ${totalItems}`, hint: "позиций wish-листа" },
@@ -135,20 +138,23 @@ function renderRsvps(rsvps) {
     $("#rsvp-table").innerHTML = '<p class="empty">Пока никто не подтвердил участие.</p>';
     return;
   }
-  const rows = rsvps
+  // Сначала те, кто придёт, затем отказы
+  const sorted = [...rsvps].sort((a, b) => (a.coming === b.coming ? 0 : a.coming ? -1 : 1));
+  const rows = sorted
     .map(
       (r, i) => `
-    <tr>
+    <tr class="${r.coming ? "" : "row-declined"}">
       <td>${i + 1}</td>
       <td><b>${r.name}</b></td>
-      <td>${r.with_partner ? "💑 Да" : "—"}</td>
+      <td>${r.coming ? "✅ Придёт" : "✖ Не придёт"}</td>
+      <td>${r.coming && r.with_partner ? "💑 Да" : "—"}</td>
       <td>${fmtDate(r.created_at)}</td>
     </tr>`
     )
     .join("");
   $("#rsvp-table").innerHTML = `
     <table class="data-table">
-      <thead><tr><th>#</th><th>Имя</th><th>Со 2-й половинкой</th><th>Когда подтвердил</th></tr></thead>
+      <thead><tr><th>#</th><th>Имя</th><th>Статус</th><th>Со 2-й половинкой</th><th>Когда ответил</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
 }

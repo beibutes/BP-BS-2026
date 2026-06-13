@@ -213,6 +213,11 @@ body {
   color: rgba(255, 255, 255, 0.85);
   border-color: rgba(255, 255, 255, 0.3);
 }
+.rsvp-card .rsvp-no {
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.18);
+  font-weight: 500;
+}
 
 /* ── Wishlist section ── */
 .wishlist-section {

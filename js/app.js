@@ -161,7 +161,16 @@ async function renderRsvp() {
   const store = window.BookingStore;
   const r = store.rsvpGet ? await store.rsvpGet(getVisitorId()) : null;
 
-  if (r && r.name) {
+  const changeBtn = `<button class="btn btn-ghost" id="rsvp-cancel">Изменить ответ</button>`;
+  const onChange = () => {
+    document.getElementById("rsvp-cancel").addEventListener("click", async () => {
+      await store.rsvpUnset(getVisitorId());
+      renderRsvp();
+    });
+  };
+
+  if (r && r.name && r.coming) {
+    // Придёт
     const partnerNote = r.with_partner
       ? ' <span class="rsvp-partner">+ вторая половинка</span>'
       : "";
@@ -171,27 +180,33 @@ async function renderRsvp() {
         Загляните в мой Wish-лист
         <span class="rsvp-arrow">↓</span>
       </a>
-      <button class="btn btn-ghost" id="rsvp-cancel">Отменить участие</button>`;
-    document.getElementById("rsvp-cancel").addEventListener("click", async () => {
-      await store.rsvpUnset(getVisitorId());
-      renderRsvp();
-    });
+      ${changeBtn}`;
+    onChange();
+  } else if (r && r.name && !r.coming) {
+    // Не придёт
+    box.innerHTML = `
+      <p class="rsvp-status">Жаль, что не сможете прийти, <b>${r.name}</b>. 🙏</p>
+      ${changeBtn}`;
+    onChange();
   } else {
+    // Ещё не ответил
     box.innerHTML = `
       <p class="rsvp-q">Придёте на мероприятие?</p>
       <div class="rsvp-btns">
         <button class="btn" id="rsvp-partner">💑 Приду со второй половинкой</button>
         <button class="btn btn-ghost" id="rsvp-yes">✋ Приду один(а)</button>
+        <button class="btn btn-ghost rsvp-no" id="rsvp-no">✖ Не смогу прийти</button>
       </div>`;
 
-    const confirm = async (withPartner) => {
+    const respond = async (withPartner, coming) => {
       const n = prompt("Как вас записать? Имя и фамилия:");
       if (!n || !n.trim()) return;
-      await store.rsvpSet(getVisitorId(), n.trim(), withPartner);
+      await store.rsvpSet(getVisitorId(), n.trim(), withPartner, coming);
       renderRsvp();
     };
-    document.getElementById("rsvp-partner").addEventListener("click", () => confirm(true));
-    document.getElementById("rsvp-yes").addEventListener("click", () => confirm(false));
+    document.getElementById("rsvp-partner").addEventListener("click", () => respond(true, true));
+    document.getElementById("rsvp-yes").addEventListener("click", () => respond(false, true));
+    document.getElementById("rsvp-no").addEventListener("click", () => respond(false, false));
   }
 }
 
