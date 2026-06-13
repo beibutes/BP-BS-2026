@@ -3,6 +3,11 @@
   min-height: 100vh;
 }
 
+/* Атрибут hidden должен перекрывать display из классов (.login-screen/.dashboard) */
+[hidden] {
+  display: none !important;
+}
+
 /* ── Экран входа ── */
 .login-screen {
   min-height: 100vh;
