@@ -1,39 +1,42 @@
-// ── Пароль администратора ──────────────────────────────────────────
-// ⚠️ Это лёгкая защита (страница статическая). Поменяй на свой пароль.
-// Для серьёзной защиты — Supabase Auth (см. README).
-const ADMIN_PASSWORD = "svoy2026";
-
+// ── Вход через Supabase Auth ───────────────────────────────────────
 const $ = (sel) => document.querySelector(sel);
+const auth = window.BookingStore.client && window.BookingStore.client.auth;
 
 // Карта id → название позиции wish-листа
 const TITLES = {};
 (window.WISHLIST || []).forEach((i) => (TITLES[i.id] = i.title));
 
-// ── Вход ───────────────────────────────────────────────────────────
 function showDashboard() {
   $("#login").hidden = true;
   $("#dashboard").hidden = false;
   loadData();
 }
 
-function checkAuth() {
-  if (sessionStorage.getItem("admin_ok") === "1") {
-    showDashboard();
+async function checkAuth() {
+  if (!auth) {
+    $("#login-error").textContent = "Supabase не настроен.";
+    return;
   }
+  const { data } = await auth.getSession();
+  if (data.session) showDashboard();
 }
 
-$("#login-form").addEventListener("submit", (e) => {
+$("#login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  if ($("#pass").value === ADMIN_PASSWORD) {
-    sessionStorage.setItem("admin_ok", "1");
-    showDashboard();
+  $("#login-error").textContent = "";
+  const { error } = await auth.signInWithPassword({
+    email: $("#email").value.trim(),
+    password: $("#pass").value,
+  });
+  if (error) {
+    $("#login-error").textContent = "Неверный email или пароль";
   } else {
-    $("#login-error").textContent = "Неверный пароль";
+    showDashboard();
   }
 });
 
-$("#logout").addEventListener("click", () => {
-  sessionStorage.removeItem("admin_ok");
+$("#logout").addEventListener("click", async () => {
+  await auth.signOut();
   location.reload();
 });
 

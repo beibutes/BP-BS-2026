@@ -63,6 +63,7 @@ function makeSupabaseStore() {
 
   return {
     mode: "supabase",
+    client: sb, // доступ к auth для админки
     async getAll() {
       // Публичная страница получает только факт брони (item_id), без имён.
       const { data, error } = await sb.from(TABLE).select("item_id");
@@ -75,13 +76,17 @@ function makeSupabaseStore() {
       return map;
     },
     async reserve(itemId, name) {
-      // item_id — PRIMARY KEY, поэтому вставка атомарна:
-      // второй гость на ту же позицию получит ошибку дубликата.
-      const { error } = await sb
-        .from(TABLE)
-        .insert({ item_id: itemId, name });
-      if (error) return { ok: false, by: null }; // скорее всего уже занято
-      return { ok: true };
+      // Атомарная бронь через функцию reserve_item: пишет факт брони
+      // и имя дарителя (в закрытую таблицу). Вернёт false, если занято.
+      const { data, error } = await sb.rpc("reserve_item", {
+        p_item_id: itemId,
+        p_name: name,
+      });
+      if (error) {
+        console.error("Supabase reserve:", error.message);
+        return { ok: false };
+      }
+      return { ok: data === true };
     },
     async cancel(itemId) {
       const { error } = await sb.from(TABLE).delete().eq("item_id", itemId);
@@ -116,15 +121,27 @@ function makeSupabaseStore() {
       return data;
     },
     async getBookingsDetailed() {
-      const { data, error } = await sb
-        .from(TABLE)
-        .select("item_id,name,created_at")
-        .order("created_at", { ascending: false });
-      if (error) {
-        console.error("Supabase getBookingsDetailed:", error.message);
+      // Имена — из закрытой таблицы (видны только админу), время — из bookings.
+      const [namesRes, bookingsRes] = await Promise.all([
+        sb.from("booking_names").select("item_id,name"),
+        sb.from(TABLE).select("item_id,created_at"),
+      ]);
+      if (namesRes.error || bookingsRes.error) {
+        console.error(
+          "Supabase getBookingsDetailed:",
+          (namesRes.error || bookingsRes.error).message
+        );
         return [];
       }
-      return data;
+      const nameMap = {};
+      namesRes.data.forEach((r) => (nameMap[r.item_id] = r.name));
+      return bookingsRes.data
+        .map((b) => ({
+          item_id: b.item_id,
+          name: nameMap[b.item_id] || "—",
+          created_at: b.created_at,
+        }))
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     },
   };
 }
