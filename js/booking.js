@@ -18,11 +18,14 @@ const LocalStore = {
       return {};
     }
   },
-  async reserve(itemId, name) {
+  async reserve(itemId, name, ownerId) {
     const all = await this.getAll();
     if (all[itemId]) return { ok: false, by: all[itemId] };
     all[itemId] = name;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    const owners = JSON.parse(localStorage.getItem("birthday_owners") || "{}");
+    owners[itemId] = ownerId;
+    localStorage.setItem("birthday_owners", JSON.stringify(owners));
     return { ok: true };
   },
   async cancel(itemId) {
@@ -30,6 +33,34 @@ const LocalStore = {
     delete all[itemId];
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
     return { ok: true };
+  },
+  async cancelOwn(itemId, ownerId) {
+    const owners = JSON.parse(localStorage.getItem("birthday_owners") || "{}");
+    if (owners[itemId] !== ownerId) return false;
+    await this.cancel(itemId);
+    delete owners[itemId];
+    localStorage.setItem("birthday_owners", JSON.stringify(owners));
+    return true;
+  },
+  async getMyItems(ownerId) {
+    const owners = JSON.parse(localStorage.getItem("birthday_owners") || "{}");
+    return Object.keys(owners).filter((k) => owners[k] === ownerId);
+  },
+  async rsvpSet(visitorId, name) {
+    localStorage.setItem("birthday_rsvp", JSON.stringify({ visitorId, name }));
+    return true;
+  },
+  async rsvpUnset() {
+    localStorage.removeItem("birthday_rsvp");
+    return true;
+  },
+  async rsvpGet() {
+    const r = JSON.parse(localStorage.getItem("birthday_rsvp") || "null");
+    return r ? r.name : null;
+  },
+  async getRsvps() {
+    const r = JSON.parse(localStorage.getItem("birthday_rsvp") || "null");
+    return r ? [{ name: r.name, created_at: new Date().toISOString() }] : [];
   },
   onChange(cb) {
     // синхронизация между вкладками одного браузера
@@ -75,18 +106,69 @@ function makeSupabaseStore() {
       data.forEach((r) => (map[r.item_id] = true));
       return map;
     },
-    async reserve(itemId, name) {
-      // Атомарная бронь через функцию reserve_item: пишет факт брони
-      // и имя дарителя (в закрытую таблицу). Вернёт false, если занято.
+    async reserve(itemId, name, ownerId) {
+      // Атомарная бронь: факт + имя + владелец (visitor_id). false, если занято.
       const { data, error } = await sb.rpc("reserve_item", {
         p_item_id: itemId,
         p_name: name,
+        p_owner_id: ownerId,
       });
       if (error) {
         console.error("Supabase reserve:", error.message);
         return { ok: false };
       }
       return { ok: data === true };
+    },
+    async cancelOwn(itemId, ownerId) {
+      const { data, error } = await sb.rpc("cancel_own", {
+        p_item_id: itemId,
+        p_owner_id: ownerId,
+      });
+      if (error) {
+        console.error("Supabase cancelOwn:", error.message);
+        return false;
+      }
+      return data === true;
+    },
+    async getMyItems(ownerId) {
+      const { data, error } = await sb.rpc("my_items", { p_owner_id: ownerId });
+      if (error) {
+        console.error("Supabase getMyItems:", error.message);
+        return [];
+      }
+      return data || [];
+    },
+    async rsvpSet(visitorId, name) {
+      const { error } = await sb.rpc("rsvp_set", {
+        p_visitor_id: visitorId,
+        p_name: name,
+      });
+      if (error) console.error("Supabase rsvpSet:", error.message);
+      return !error;
+    },
+    async rsvpUnset(visitorId) {
+      const { error } = await sb.rpc("rsvp_unset", { p_visitor_id: visitorId });
+      if (error) console.error("Supabase rsvpUnset:", error.message);
+      return !error;
+    },
+    async rsvpGet(visitorId) {
+      const { data, error } = await sb.rpc("rsvp_get", { p_visitor_id: visitorId });
+      if (error) {
+        console.error("Supabase rsvpGet:", error.message);
+        return null;
+      }
+      return data || null;
+    },
+    async getRsvps() {
+      const { data, error } = await sb
+        .from("rsvps")
+        .select("name,created_at")
+        .order("created_at", { ascending: false });
+      if (error) {
+        console.error("Supabase getRsvps:", error.message);
+        return [];
+      }
+      return data;
     },
     async cancel(itemId) {
       const { error } = await sb.from(TABLE).delete().eq("item_id", itemId);

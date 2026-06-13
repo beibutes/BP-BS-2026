@@ -131,6 +131,40 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* ── RSVP ── */
+.rsvp-section {
+  background: var(--bg);
+  padding: 0 20px 64px;
+  display: flex;
+  justify-content: center;
+}
+.rsvp-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 26px 28px;
+  text-align: center;
+  max-width: 460px;
+  width: 100%;
+  backdrop-filter: blur(6px);
+}
+.rsvp-q,
+.rsvp-status {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.rsvp-status b {
+  color: var(--gold);
+}
+.rsvp-card .btn {
+  margin-top: 0;
+}
+.rsvp-card .btn-ghost {
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 /* ── Wishlist section ── */
 .wishlist-section {
   background: #f6f3ff;
@@ -187,6 +221,15 @@ body {
 }
 .card.is-reserved {
   opacity: 0.92;
+}
+.card.is-mine {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  opacity: 1;
+}
+.card.is-mine .reserved-note {
+  color: var(--accent);
+  font-weight: 600;
 }
 .badge {
   position: absolute;

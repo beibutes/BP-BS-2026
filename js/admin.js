@@ -88,26 +88,28 @@ function deviceFromUA(ua) {
 
 // ── Загрузка и рендер данных ───────────────────────────────────────
 async function loadData() {
-  const [bookings, visits] = await Promise.all([
+  const [bookings, visits, rsvps] = await Promise.all([
     window.BookingStore.getBookingsDetailed(),
     window.BookingStore.getVisits(),
+    window.BookingStore.getRsvps ? window.BookingStore.getRsvps() : [],
   ]);
 
-  renderStats(bookings, visits);
+  renderStats(bookings, visits, rsvps);
+  renderRsvps(rsvps);
   renderBookings(bookings);
   renderVisits(visits);
 }
 
-function renderStats(bookings, visits) {
+function renderStats(bookings, visits, rsvps) {
   const uniqueVisitors = new Set(visits.map((v) => v.visitor_id)).size;
   const totalItems = (window.WISHLIST || []).length;
   const lastVisit = visits.length ? fmtDate(visits[0].created_at) : "—";
 
   const cards = [
+    { label: "Придут", value: rsvps.length, hint: 'нажали «Я приду»' },
     { label: "Уникальных гостей", value: uniqueVisitors, hint: "по устройствам/браузерам" },
     { label: "Всего заходов", value: visits.length, hint: "сессий на сайте" },
     { label: "Забронировано", value: `${bookings.length} / ${totalItems}`, hint: "позиций wish-листа" },
-    { label: "Последний заход", value: lastVisit, hint: "" },
   ];
 
   $("#stats").innerHTML = cards
@@ -120,6 +122,28 @@ function renderStats(bookings, visits) {
     </div>`
     )
     .join("");
+}
+
+function renderRsvps(rsvps) {
+  if (!rsvps.length) {
+    $("#rsvp-table").innerHTML = '<p class="empty">Пока никто не подтвердил участие.</p>';
+    return;
+  }
+  const rows = rsvps
+    .map(
+      (r, i) => `
+    <tr>
+      <td>${i + 1}</td>
+      <td><b>${r.name}</b></td>
+      <td>${fmtDate(r.created_at)}</td>
+    </tr>`
+    )
+    .join("");
+  $("#rsvp-table").innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>#</th><th>Имя</th><th>Когда подтвердил</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
 }
 
 function renderBookings(bookings) {

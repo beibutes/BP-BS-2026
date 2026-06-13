@@ -52,14 +52,25 @@ function placeholderSVG(emoji) {
 }
 
 let bookings = {};
+let myItems = [];
 
 function cardTemplate(item) {
-  const reservedBy = bookings[item.id];
-  const isReserved = Boolean(reservedBy);
+  const isReserved = Boolean(bookings[item.id]);
+  const isMine = myItems.includes(item.id);
   const fallback = placeholderSVG(item.emoji);
 
+  let footer;
+  if (!isReserved) {
+    footer = `<button class="btn" data-action="reserve" data-id="${item.id}">Забронировать</button>`;
+  } else if (isMine) {
+    footer = `<p class="reserved-note">✓ Ваша бронь</p>
+              <button class="btn btn-ghost" data-action="cancel-own" data-id="${item.id}">Снять мою бронь</button>`;
+  } else {
+    footer = `<p class="reserved-note">✓ Уже забронировано</p>`;
+  }
+
   return `
-  <article class="card ${isReserved ? "is-reserved" : ""}" data-id="${item.id}">
+  <article class="card ${isReserved ? "is-reserved" : ""} ${isMine ? "is-mine" : ""}" data-id="${item.id}">
     <div class="card-img">
       <img src="${item.img}" alt="${item.title}"
            loading="lazy"
@@ -70,11 +81,7 @@ function cardTemplate(item) {
       <h3>${item.title}</h3>
       <p class="card-desc">${item.desc}</p>
       <p class="price">${formatPrice(item.price)}</p>
-      ${
-        isReserved
-          ? `<p class="reserved-note">✓ Уже забронировано</p>`
-          : `<button class="btn" data-action="reserve" data-id="${item.id}">Забронировать</button>`
-      }
+      ${footer}
     </div>
   </article>`;
 }
@@ -85,7 +92,13 @@ function renderWishlist() {
 }
 
 async function refresh() {
-  bookings = await window.BookingStore.getAll();
+  const store = window.BookingStore;
+  const [b, mine] = await Promise.all([
+    store.getAll(),
+    store.getMyItems ? store.getMyItems(getVisitorId()) : [],
+  ]);
+  bookings = b;
+  myItems = mine;
   renderWishlist();
 }
 
@@ -98,11 +111,48 @@ async function onGridClick(e) {
   if (action === "reserve") {
     const name = prompt("Ваше имя (его увидит только именинник):");
     if (!name || !name.trim()) return;
-    const res = await window.BookingStore.reserve(id, name.trim());
+    const res = await window.BookingStore.reserve(id, name.trim(), getVisitorId());
     if (!res.ok) {
       alert("Эту позицию только что забронировали. Выберите другую 🙂");
     }
     await refresh();
+  }
+
+  if (action === "cancel-own") {
+    if (!confirm("Снять вашу бронь с этой позиции?")) return;
+    const ok = await window.BookingStore.cancelOwn(id, getVisitorId());
+    if (!ok) {
+      alert("Не удалось снять бронь — её ставил другой гость.");
+    }
+    await refresh();
+  }
+}
+
+// ── RSVP «Я приду» ────────────────────────────────────────────────
+async function renderRsvp() {
+  const box = document.getElementById("rsvp");
+  if (!box) return;
+  const store = window.BookingStore;
+  const name = store.rsvpGet ? await store.rsvpGet(getVisitorId()) : null;
+
+  if (name) {
+    box.innerHTML = `
+      <p class="rsvp-status">🎉 Спасибо! Вы подтвердили участие как <b>${name}</b></p>
+      <button class="btn btn-ghost" id="rsvp-cancel">Отменить участие</button>`;
+    document.getElementById("rsvp-cancel").addEventListener("click", async () => {
+      await store.rsvpUnset(getVisitorId());
+      renderRsvp();
+    });
+  } else {
+    box.innerHTML = `
+      <p class="rsvp-q">Придёте на праздник?</p>
+      <button class="btn" id="rsvp-yes">✋ Я приду</button>`;
+    document.getElementById("rsvp-yes").addEventListener("click", async () => {
+      const n = prompt("Как вас записать? Имя и фамилия:");
+      if (!n || !n.trim()) return;
+      await store.rsvpSet(getVisitorId(), n.trim());
+      renderRsvp();
+    });
   }
 }
 
@@ -133,6 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("wishlist").addEventListener("click", onGridClick);
   refresh();
+  renderRsvp();
   logVisitOnce();
 
   // Реальное время: подхватываем брони других гостей (Supabase)
