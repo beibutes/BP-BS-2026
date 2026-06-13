@@ -4,7 +4,9 @@
 // Интерфейс одинаковый: getAll() / reserve(id, name) / cancel(id) + onChange(cb).
 
 const STORAGE_KEY = "birthday_bookings_v1";
+const VISITS_KEY = "birthday_visits_v1";
 const TABLE = "bookings";
+const VISITS_TABLE = "visits";
 
 // ── Режим localStorage (демо) ──────────────────────────────────────
 const LocalStore = {
@@ -33,6 +35,23 @@ const LocalStore = {
     // синхронизация между вкладками одного браузера
     window.addEventListener("storage", cb);
   },
+  // — методы для админки/учёта (демо-режим) —
+  async logVisit(visitorId, ua) {
+    const list = JSON.parse(localStorage.getItem(VISITS_KEY) || "[]");
+    list.push({ visitor_id: visitorId, user_agent: ua, created_at: new Date().toISOString() });
+    localStorage.setItem(VISITS_KEY, JSON.stringify(list));
+  },
+  async getVisits() {
+    return JSON.parse(localStorage.getItem(VISITS_KEY) || "[]");
+  },
+  async getBookingsDetailed() {
+    const all = await this.getAll();
+    return Object.entries(all).map(([item_id, name]) => ({
+      item_id,
+      name,
+      created_at: null,
+    }));
+  },
 };
 
 // ── Режим Supabase (общая бронь) ───────────────────────────────────
@@ -45,13 +64,14 @@ function makeSupabaseStore() {
   return {
     mode: "supabase",
     async getAll() {
-      const { data, error } = await sb.from(TABLE).select("item_id,name");
+      // Публичная страница получает только факт брони (item_id), без имён.
+      const { data, error } = await sb.from(TABLE).select("item_id");
       if (error) {
         console.error("Supabase getAll:", error.message);
         return {};
       }
       const map = {};
-      data.forEach((r) => (map[r.item_id] = r.name));
+      data.forEach((r) => (map[r.item_id] = true));
       return map;
     },
     async reserve(itemId, name) {
@@ -76,6 +96,35 @@ function makeSupabaseStore() {
           cb
         )
         .subscribe();
+    },
+    // — методы для админки/учёта —
+    async logVisit(visitorId, ua) {
+      const { error } = await sb
+        .from(VISITS_TABLE)
+        .insert({ visitor_id: visitorId, user_agent: ua });
+      if (error) console.error("Supabase logVisit:", error.message);
+    },
+    async getVisits() {
+      const { data, error } = await sb
+        .from(VISITS_TABLE)
+        .select("visitor_id,user_agent,created_at")
+        .order("created_at", { ascending: false });
+      if (error) {
+        console.error("Supabase getVisits:", error.message);
+        return [];
+      }
+      return data;
+    },
+    async getBookingsDetailed() {
+      const { data, error } = await sb
+        .from(TABLE)
+        .select("item_id,name,created_at")
+        .order("created_at", { ascending: false });
+      if (error) {
+        console.error("Supabase getBookingsDetailed:", error.message);
+        return [];
+      }
+      return data;
     },
   };
 }

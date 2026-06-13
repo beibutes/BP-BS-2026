@@ -24,3 +24,20 @@ create policy "delete bookings" on public.bookings for delete using (true);
 -- Dashboard → Database → Replication → добавить таблицу bookings,
 -- либо выполнить:
 alter publication supabase_realtime add table public.bookings;
+
+-- ─────────────────────────────────────────────────────────────────
+-- Учёт посещений (для страницы администратора).
+create table if not exists public.visits (
+  id         uuid primary key default gen_random_uuid(),
+  visitor_id text not null,
+  user_agent text,
+  created_at timestamptz not null default now()
+);
+
+alter table public.visits enable row level security;
+
+drop policy if exists "insert visits" on public.visits;
+drop policy if exists "read visits"   on public.visits;
+
+create policy "insert visits" on public.visits for insert with check (true);
+create policy "read visits"   on public.visits for select using (true);

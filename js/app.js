@@ -72,8 +72,7 @@ function cardTemplate(item) {
       <p class="price">${formatPrice(item.price)}</p>
       ${
         isReserved
-          ? `<p class="reserved-note">Дарит: <b>${reservedBy}</b></p>
-             <button class="btn btn-ghost" data-action="cancel" data-id="${item.id}">Отменить бронь</button>`
+          ? `<p class="reserved-note">✓ Уже забронировано</p>`
           : `<button class="btn" data-action="reserve" data-id="${item.id}">Забронировать</button>`
       }
     </div>
@@ -97,7 +96,7 @@ async function onGridClick(e) {
   const action = btn.dataset.action;
 
   if (action === "reserve") {
-    const name = prompt("Ваше имя (будет видно как даритель):");
+    const name = prompt("Ваше имя (его увидит только именинник):");
     if (!name || !name.trim()) return;
     const res = await window.BookingStore.reserve(id, name.trim());
     if (!res.ok) {
@@ -105,12 +104,25 @@ async function onGridClick(e) {
     }
     await refresh();
   }
+}
 
-  if (action === "cancel") {
-    if (confirm("Отменить бронь этой позиции?")) {
-      await window.BookingStore.cancel(id);
-      await refresh();
-    }
+// ── Учёт посещений (один раз за сессию браузера) ──────────────────
+function getVisitorId() {
+  let vid = localStorage.getItem("birthday_visitor_id");
+  if (!vid) {
+    vid =
+      (crypto.randomUUID && crypto.randomUUID()) ||
+      "v_" + Math.random().toString(36).slice(2) + Date.now();
+    localStorage.setItem("birthday_visitor_id", vid);
+  }
+  return vid;
+}
+
+function logVisitOnce() {
+  if (sessionStorage.getItem("birthday_visit_logged")) return;
+  sessionStorage.setItem("birthday_visit_logged", "1");
+  if (window.BookingStore.logVisit) {
+    window.BookingStore.logVisit(getVisitorId(), navigator.userAgent);
   }
 }
 
@@ -121,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("wishlist").addEventListener("click", onGridClick);
   refresh();
+  logVisitOnce();
 
   // Реальное время: подхватываем брони других гостей (Supabase)
   // или из других вкладок (localStorage) — единый метод onChange.

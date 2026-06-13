@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Администратор · День рождения</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- Экран входа -->
+  <section id="login" class="login-screen">
+    <form id="login-form" class="login-card">
+      <h1>🔐 Панель администратора</h1>
+      <p>Доступ к статистике приглашения и броней.</p>
+      <input id="pass" type="password" placeholder="Пароль" autocomplete="current-password" />
+      <button class="btn" type="submit">Войти</button>
+      <p id="login-error" class="login-error"></p>
+    </form>
+  </section>
+
+  <!-- Панель -->
+  <main id="dashboard" class="dashboard" hidden>
+    <header class="dash-head">
+      <h1>Панель администратора</h1>
+      <div class="dash-actions">
+        <button id="refresh" class="btn btn-ghost">↻ Обновить</button>
+        <button id="logout" class="btn btn-ghost">Выйти</button>
+      </div>
+    </header>
+
+    <section class="stats" id="stats"><!-- карточки статистики --></section>
+
+    <section class="panel">
+      <h2>🎁 Брони wish-листа</h2>
+      <div id="bookings-table"></div>
+    </section>
+
+    <section class="panel">
+      <h2>👥 Посещения</h2>
+      <div id="visits-table"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="data/wishlist.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

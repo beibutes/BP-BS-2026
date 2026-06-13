@@ -183,7 +183,10 @@ body {
   display: block;
 }
 .card.is-reserved .card-img img {
-  filter: grayscale(0.85) brightness(0.92);
+  filter: grayscale(1) brightness(0.95);
+}
+.card.is-reserved {
+  opacity: 0.92;
 }
 .badge {
   position: absolute;

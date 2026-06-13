@@ -1,0 +1,164 @@
+.admin-body {
+  background: #f4f1fb;
+  min-height: 100vh;
+}
+
+/* ── Экран входа ── */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background:
+    radial-gradient(800px 400px at 50% -10%, rgba(179, 136, 255, 0.35), transparent 60%),
+    var(--bg);
+}
+.login-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 30px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+.login-card h1 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.login-card p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+.login-card input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd6f0;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+.login-card .btn {
+  width: 100%;
+  margin: 0;
+}
+.login-error {
+  color: #e0245e;
+  font-size: 14px;
+  min-height: 18px;
+  margin-top: 10px;
+}
+
+/* ── Дашборд ── */
+.dashboard {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+.dash-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.dash-head h1 {
+  font-size: 26px;
+}
+.dash-actions {
+  display: flex;
+  gap: 10px;
+}
+.dash-actions .btn {
+  margin: 0;
+  padding: 9px 14px;
+  font-size: 14px;
+}
+
+/* ── Статистика ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(36, 27, 58, 0.06);
+}
+.stat-value {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.stat-label {
+  font-size: 14px;
+  color: var(--ink);
+  margin-top: 4px;
+}
+.stat-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── Панели/таблицы ── */
+.panel {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 6px 20px rgba(36, 27, 58, 0.06);
+}
+.panel h2 {
+  font-size: 19px;
+  margin-bottom: 14px;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+}
+.data-table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.data-table code {
+  background: #f1edfb;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.empty {
+  color: var(--muted);
+  font-size: 14px;
+  padding: 8px 0;
+}
+.btn-mini {
+  border: 1px solid #ddd6f0;
+  background: #fff;
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn-mini:hover {
+  background: #faf7ff;
+  color: #e0245e;
+  border-color: #f3c6d6;
+}
