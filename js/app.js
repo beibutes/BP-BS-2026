@@ -220,7 +220,7 @@ function initCalendar() {
   if (g) {
     g.href =
       "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-      "&text=" + encodeURIComponent("День рождения (41) 🎉") +
+      "&text=" + encodeURIComponent("День рождение Бейбут Есенбаев") +
       "&dates=20261009T130000Z/20261009T170000Z" +
       "&details=" + encodeURIComponent(
         "Отпразднуем вместе! Приглашение: https://beibutes.github.io/den-rozhdeniya-svoy-2026/"
