@@ -29,7 +29,8 @@ $("#login-form").addEventListener("submit", async (e) => {
     password: $("#pass").value,
   });
   if (error) {
-    $("#login-error").textContent = "Неверный email или пароль";
+    $("#login-error").textContent =
+      "Не удалось войти: " + (error.message || "проверьте email и пароль");
   } else {
     showDashboard();
   }
