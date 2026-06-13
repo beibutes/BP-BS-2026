@@ -109,9 +109,19 @@ async function onGridClick(e) {
   const action = btn.dataset.action;
 
   if (action === "reserve") {
-    const name = prompt("Ваше имя (его увидит только именинник):");
-    if (!name || !name.trim()) return;
-    const res = await window.BookingStore.reserve(id, name.trim(), getVisitorId());
+    const store = window.BookingStore;
+    // Если гость уже подтвердил участие — берём имя оттуда, не спрашиваем заново.
+    const rsvp = store.rsvpGet ? await store.rsvpGet(getVisitorId()) : null;
+    let name;
+    if (rsvp && rsvp.name) {
+      if (!confirm(`Забронировать как «${rsvp.name}»?`)) return;
+      name = rsvp.name;
+    } else {
+      const input = prompt("Ваше имя (его увидит только именинник):");
+      if (!input || !input.trim()) return;
+      name = input.trim();
+    }
+    const res = await store.reserve(id, name, getVisitorId());
     if (!res.ok) {
       alert("Эту позицию только что забронировали. Выберите другую 🙂");
     }
