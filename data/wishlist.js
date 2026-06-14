@@ -20,70 +20,70 @@ window.WISHLIST_TIERS = [
 
 window.WISHLIST = [
   {
-    "id": "outlive",
+    "id": "book-outlive",
     "title": "«Outlive»",
-    "desc": "",
+    "desc": "Peter Attia — наука о долголетии и здоровье.",
     "priceText": "12 000 ₸",
     "tier": "budget",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "📕",
+    "img": "img/products/book-outlive.jpg",
+    "url": "https://peterattiamd.com/outlive/"
   },
   {
-    "id": "why-we-sleep",
+    "id": "book-why-we-sleep",
     "title": "«Why We Sleep»",
-    "desc": "",
+    "desc": "Matthew Walker — почему сон критичен для здоровья.",
     "priceText": "10 000 ₸",
     "tier": "budget",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "📘",
+    "img": "img/products/book-why-we-sleep.jpg",
+    "url": "https://www.simonandschuster.com/books/Why-We-Sleep/Matthew-Walker/9781501144325"
   },
   {
-    "id": "deep-medicine",
+    "id": "book-deep-medicine",
     "title": "«Deep Medicine»",
-    "desc": "",
+    "desc": "Eric Topol — как ИИ меняет медицину.",
     "priceText": "12 000 ₸",
     "tier": "budget",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "📗",
+    "img": "img/products/book-deep-medicine.jpg",
+    "url": "https://www.basicbooks.com/titles/eric-topol/deep-medicine/9781541644632/"
   },
   {
-    "id": "co-intelligence",
+    "id": "book-co-intelligence",
     "title": "«Co-Intelligence»",
-    "desc": "",
+    "desc": "Ethan Mollick — как работать вместе с ИИ.",
     "priceText": "12 000 ₸",
     "tier": "budget",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "📙",
+    "img": "img/products/book-co-intelligence.jpg",
+    "url": "https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/"
   },
   {
-    "id": "the-code-breaker",
+    "id": "book-code-breaker",
     "title": "«The Code Breaker»",
-    "desc": "",
+    "desc": "Walter Isaacson — Дженнифер Даудна, CRISPR и биотех.",
     "priceText": "12 000 ₸",
     "tier": "budget",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "📒",
+    "img": "img/products/book-code-breaker.jpg",
+    "url": "https://www.simonandschuster.com/books/The-Code-Breaker/Walter-Isaacson/9781982115852"
   },
   {
-    "id": "7-powers",
+    "id": "book-7-powers",
     "title": "«7 Powers»",
-    "desc": "",
+    "desc": "Hamilton Helmer — фундамент бизнес-стратегии.",
     "priceText": "12 000 ₸",
     "tier": "budget",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "📔",
+    "img": "img/products/book-7-powers.jpg",
+    "url": "https://7powers.com/"
   },
   {
     "id": "plaud-notepin",
@@ -163,26 +163,26 @@ window.WISHLIST = [
     "url": "https://www.eightsleep.com/pod/"
   },
   {
-    "id": "canyon-endurace-cf-8",
+    "id": "canyon-endurace",
     "title": "Canyon Endurace CF 8",
-    "desc": "",
+    "desc": "Шоссейный велосипед: карбон, Shimano 105 Di2.",
     "priceText": "1 260 000 – 1 420 000 ₸",
     "tier": "premium",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "🚲",
+    "img": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=640&q=80",
+    "url": "https://www.canyon.com/en-us/road-bikes/endurance-bikes/endurace/"
   },
   {
-    "id": "bambu-lab-p1s",
+    "id": "bambu-p1s",
     "title": "Bambu Lab P1S",
-    "desc": "",
+    "desc": "3D-принтер: многоцветная печать, Combo с AMS.",
     "priceText": "370 000 – 500 000 ₸",
     "tier": "premium",
     "top": false,
-    "emoji": "🎁",
-    "img": "",
-    "url": ""
+    "emoji": "🖨️",
+    "img": "img/products/bambu-p1s.jpg",
+    "url": "https://bambulab.com/en/p1"
   },
   {
     "id": "steam-closet",
