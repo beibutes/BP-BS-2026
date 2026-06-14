@@ -164,7 +164,7 @@ window.WISHLIST = [
   },
   {
     "id": "steam-closet",
-    "title": "Паровой шкаф LG Styler / Samsung AirDresser",
+    "title": "Паровой шкаф Samsung AirDresser",
     "desc": "Уход за костюмами без химчистки.",
     "priceText": "800 000 – 1 050 000 ₸",
     "tier": "premium",

@@ -86,7 +86,7 @@ const CATALOG = [
   { match: ["airpods max"], id: "airpods-max", emoji: "🎧", title: "AirPods Max",
     desc: "Накладные наушники Apple с шумоподавлением (USB-C).",
     img: LOCAL("airpods-max.png"), url: "https://www.apple.com/airpods-max/" },
-  { match: ["паровой шкаф", "styler", "airdresser"], id: "steam-closet", emoji: "🧥", title: "Паровой шкаф LG Styler / Samsung AirDresser",
+  { match: ["паровой шкаф", "styler", "airdresser"], id: "steam-closet", emoji: "🧥", title: "Паровой шкаф Samsung AirDresser",
     desc: "Уход за костюмами без химчистки.",
     img: LOCAL("airdresser.jpg"), url: "https://www.samsung.com/us/home-appliances/airdresser/" },
 ];
