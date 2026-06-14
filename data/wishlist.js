@@ -27,7 +27,8 @@ window.WISHLIST = [
     "tier": "budget",
     "top": false,
     "emoji": "📚",
-    "img": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=640&q=80"
+    "img": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=640&q=80",
+    "url": "https://peterattiamd.com/outlive/"
   },
   {
     "id": "plaud-notepin",
@@ -37,7 +38,8 @@ window.WISHLIST = [
     "tier": "budget",
     "top": false,
     "emoji": "🎙️",
-    "img": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=640&q=80"
+    "img": "img/products/plaud-notepin.png",
+    "url": "https://www.plaud.ai/products/notepin"
   },
   {
     "id": "remarkable",
@@ -47,7 +49,8 @@ window.WISHLIST = [
     "tier": "mid",
     "top": false,
     "emoji": "📝",
-    "img": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=640&q=80"
+    "img": "img/products/remarkable.jpg",
+    "url": "https://remarkable.com/store/remarkable-paper/pro"
   },
   {
     "id": "headphones",
@@ -57,7 +60,8 @@ window.WISHLIST = [
     "tier": "mid",
     "top": false,
     "emoji": "🎧",
-    "img": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=640&q=80"
+    "img": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=640&q=80",
+    "url": "https://electronics.sony.com/audio/headphones/headband/p/wh1000xm6-b"
   },
   {
     "id": "withings-scan",
@@ -67,7 +71,8 @@ window.WISHLIST = [
     "tier": "mid",
     "top": false,
     "emoji": "⚖️",
-    "img": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=640&q=80"
+    "img": "img/products/withings-scan.jpg",
+    "url": "https://www.withings.com/us/en/body-scan"
   },
   {
     "id": "dji-camera",
@@ -77,7 +82,8 @@ window.WISHLIST = [
     "tier": "mid",
     "top": false,
     "emoji": "🎥",
-    "img": "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=640&q=80"
+    "img": "img/products/dji-camera.png",
+    "url": "https://www.dji.com/osmo-pocket-3"
   },
   {
     "id": "smart-chess",
@@ -87,7 +93,8 @@ window.WISHLIST = [
     "tier": "mid",
     "top": false,
     "emoji": "♟️",
-    "img": "https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=640&q=80"
+    "img": "https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=640&q=80",
+    "url": "https://www.getgochess.com"
   },
   {
     "id": "eight-sleep",
@@ -97,7 +104,8 @@ window.WISHLIST = [
     "tier": "premium",
     "top": false,
     "emoji": "🛏️",
-    "img": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=640&q=80"
+    "img": "img/products/eight-sleep.jpg",
+    "url": "https://www.eightsleep.com/pod/"
   },
   {
     "id": "ebike",
@@ -107,7 +115,8 @@ window.WISHLIST = [
     "tier": "premium",
     "top": false,
     "emoji": "🚲",
-    "img": "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=640&q=80"
+    "img": "https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=640&q=80",
+    "url": "https://www.specialized.com/us/en/c/e-bikes/turbo-vado"
   },
   {
     "id": "dgx-spark",
@@ -117,17 +126,19 @@ window.WISHLIST = [
     "tier": "premium",
     "top": false,
     "emoji": "🧠",
-    "img": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=640&q=80"
+    "img": "img/products/dgx-spark.jpg",
+    "url": "https://www.nvidia.com/en-us/products/workstations/dgx-spark/"
   },
   {
     "id": "home-gym",
-    "title": "Силовой тренажёр Tonal / Tempo",
+    "title": "Tonal (силовой тренажёр)",
     "desc": "Умный домашний силовой тренажёр.",
     "priceText": "1 000 000 – 2 100 000 ₸",
     "tier": "premium",
     "top": false,
     "emoji": "🏋️",
-    "img": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=640&q=80"
+    "img": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=640&q=80",
+    "url": "https://www.tonal.com"
   },
   {
     "id": "luggage",
@@ -137,7 +148,8 @@ window.WISHLIST = [
     "tier": "premium",
     "top": false,
     "emoji": "🧳",
-    "img": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=640&q=80"
+    "img": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=640&q=80",
+    "url": "https://www.rimowa.com"
   },
   {
     "id": "wine-fridge",
@@ -147,6 +159,7 @@ window.WISHLIST = [
     "tier": "premium",
     "top": false,
     "emoji": "🍷",
-    "img": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=640&q=80"
+    "img": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=640&q=80",
+    "url": ""
   }
 ];

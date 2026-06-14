@@ -70,9 +70,10 @@ function cardTemplate(item) {
   }
 
   const imgSrc = item.img || fallback;
+  const isProduct = item.img && item.img.indexOf("img/products/") === 0;
   return `
   <article class="card ${isReserved ? "is-reserved" : ""} ${isMine ? "is-mine" : ""}" data-id="${item.id}">
-    <div class="card-img">
+    <div class="card-img ${isProduct ? "card-img--contain" : ""}">
       <img src="${imgSrc}" alt="${item.title}"
            loading="lazy"
            onerror="this.onerror=null;this.src='${fallback}'">
@@ -83,6 +84,7 @@ function cardTemplate(item) {
       <h3>${item.title}</h3>
       ${item.desc ? `<p class="card-desc">${item.desc}</p>` : '<p class="card-desc"></p>'}
       <p class="price">${item.priceText || ""}</p>
+      ${item.url ? `<a class="card-link" href="${item.url}" target="_blank" rel="noopener">Открыть на сайте →</a>` : ""}
       ${footer}
     </div>
   </article>`;
@@ -223,7 +225,7 @@ function initCalendar() {
       "&text=" + encodeURIComponent("День рождение Бейбут Есенбаев") +
       "&dates=20261009T130000Z/20261009T170000Z" +
       "&details=" + encodeURIComponent(
-        "Отпразднуем вместе! Приглашение: https://beibutes.github.io/den-rozhdeniya-svoy-2026/"
+        "Отпразднуем вместе! Приглашение: https://beibutes.github.io/BP-BS-2026/"
       ) +
       "&location=" + encodeURIComponent("Ресторан Svoy, ул. Жумабаева, 24, Астана");
   }

@@ -398,6 +398,14 @@ body {
   object-fit: cover;
   display: block;
 }
+/* точное фото товара на белом — показываем целиком */
+.card-img--contain {
+  background: #fff;
+}
+.card-img--contain img {
+  object-fit: contain;
+  padding: 10px;
+}
 .card.is-reserved .card-img img {
   filter: grayscale(1) brightness(0.95);
 }
@@ -453,6 +461,15 @@ body {
 .reserved-note {
   font-size: 14px;
   color: var(--muted);
+}
+.card-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.card-link:hover {
+  text-decoration: underline;
 }
 
 .btn {
