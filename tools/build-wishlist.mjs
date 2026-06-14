@@ -78,7 +78,7 @@ const CATALOG = [
     desc: "Премиальный чемодан для поездок.",
     img: IMG("photo-1553062407-98eeb64c6a62"), url: "https://www.rimowa.com" },
   { match: ["винный", "холодильник"], id: "wine-fridge", emoji: "🍷", title: "Винный шкаф Caso WineDuett 12",
-    desc: "Двухзонный, 12 бутылок, настольный + коллекционная бутылка.",
+    desc: "Двухзонный, 12 бутылок, настольный.",
     img: LOCAL("wine-fridge.jpg"), url: "https://www.caso-design.de/en/produkte/weinkuehlschraenke/" },
   { match: ["виски", "хрустальн", "riedel", "waterford", "nude"], id: "whisky-set", emoji: "🥃", title: "Хрустальный набор для виски",
     desc: "Графин и бокалы Waterford Markham, хрусталь.",

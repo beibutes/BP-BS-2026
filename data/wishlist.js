@@ -31,17 +31,6 @@ window.WISHLIST = [
     "url": "https://peterattiamd.com/outlive/"
   },
   {
-    "id": "book-why-we-sleep",
-    "title": "«Why We Sleep»",
-    "desc": "Matthew Walker — почему сон критичен для здоровья.",
-    "priceText": "10 000 ₸",
-    "tier": "budget",
-    "top": false,
-    "emoji": "📘",
-    "img": "img/products/book-why-we-sleep.jpg",
-    "url": "https://www.simonandschuster.com/books/Why-We-Sleep/Matthew-Walker/9781501144325"
-  },
-  {
     "id": "book-deep-medicine",
     "title": "«Deep Medicine»",
     "desc": "Eric Topol — как ИИ меняет медицину.",
@@ -62,28 +51,6 @@ window.WISHLIST = [
     "emoji": "📙",
     "img": "img/products/book-co-intelligence.jpg",
     "url": "https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/"
-  },
-  {
-    "id": "book-code-breaker",
-    "title": "«The Code Breaker»",
-    "desc": "Walter Isaacson — Дженнифер Даудна, CRISPR и биотех.",
-    "priceText": "12 000 ₸",
-    "tier": "budget",
-    "top": false,
-    "emoji": "📒",
-    "img": "img/products/book-code-breaker.jpg",
-    "url": "https://www.simonandschuster.com/books/The-Code-Breaker/Walter-Isaacson/9781982115852"
-  },
-  {
-    "id": "book-7-powers",
-    "title": "«7 Powers»",
-    "desc": "Hamilton Helmer — фундамент бизнес-стратегии.",
-    "priceText": "12 000 ₸",
-    "tier": "budget",
-    "top": false,
-    "emoji": "📔",
-    "img": "img/products/book-7-powers.jpg",
-    "url": "https://7powers.com/"
   },
   {
     "id": "plaud-notepin",
@@ -154,7 +121,7 @@ window.WISHLIST = [
   {
     "id": "wine-fridge",
     "title": "Винный шкаф Caso WineDuett 12",
-    "desc": "Двухзонный, 12 бутылок, настольный + коллекционная бутылка.",
+    "desc": "Двухзонный, 12 бутылок, настольный.",
     "priceText": "120 000 – 180 000 ₸",
     "tier": "mid",
     "top": false,
