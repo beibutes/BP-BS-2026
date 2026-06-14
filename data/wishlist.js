@@ -130,6 +130,28 @@ window.WISHLIST = [
     "url": "https://www.caso-design.de/en/produkte/weinkuehlschraenke/"
   },
   {
+    "id": "steam-closet",
+    "title": "Паровой шкаф Samsung AirDresser",
+    "desc": "Уход за костюмами без химчистки.",
+    "priceText": "800 000 – 1 050 000 ₸",
+    "tier": "premium",
+    "top": false,
+    "emoji": "🧥",
+    "img": "img/products/airdresser.jpg",
+    "url": "https://www.samsung.com/us/home-appliances/airdresser/"
+  },
+  {
+    "id": "bambu-p1s",
+    "title": "Bambu Lab P1S",
+    "desc": "3D-принтер: многоцветная печать, Combo с AMS.",
+    "priceText": "370 000 – 500 000 ₸",
+    "tier": "premium",
+    "top": false,
+    "emoji": "🖨️",
+    "img": "img/products/bambu-p1s.jpg",
+    "url": "https://bambulab.com/en/p1"
+  },
+  {
     "id": "eight-sleep",
     "title": "Eight Sleep Pod 5",
     "desc": "Умный топпер с терморегуляцией и трекингом сна.",
@@ -150,27 +172,5 @@ window.WISHLIST = [
     "emoji": "🚲",
     "img": "img/products/canyon-endurace.jpg",
     "url": "https://www.canyon.com/en-us/road-bikes/endurance-bikes/endurace/"
-  },
-  {
-    "id": "bambu-p1s",
-    "title": "Bambu Lab P1S",
-    "desc": "3D-принтер: многоцветная печать, Combo с AMS.",
-    "priceText": "370 000 – 500 000 ₸",
-    "tier": "premium",
-    "top": false,
-    "emoji": "🖨️",
-    "img": "img/products/bambu-p1s.jpg",
-    "url": "https://bambulab.com/en/p1"
-  },
-  {
-    "id": "steam-closet",
-    "title": "Паровой шкаф Samsung AirDresser",
-    "desc": "Уход за костюмами без химчистки.",
-    "priceText": "800 000 – 1 050 000 ₸",
-    "tier": "premium",
-    "top": false,
-    "emoji": "🧥",
-    "img": "img/products/airdresser.jpg",
-    "url": "https://www.samsung.com/us/home-appliances/airdresser/"
   }
 ];
