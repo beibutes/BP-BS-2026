@@ -53,10 +53,10 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 64%;
-  background: url("../img/hero-bg.jpg?v=2") center top / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  height: 56%;
+  background: url("../img/hero-bg.jpg?v=2") center top / contain no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
   z-index: 0;
   pointer-events: none;
 }
