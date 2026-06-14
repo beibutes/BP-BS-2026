@@ -26,9 +26,15 @@
 body {
   font-family: var(--font);
   color: var(--ink);
-  background: var(--bg);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  /* единый фон всей страницы (как в wish-list) */
+  background:
+    radial-gradient(1000px 600px at 80% 8%, rgba(99, 102, 241, 0.16), transparent 60%),
+    radial-gradient(900px 600px at 10% 45%, rgba(34, 211, 238, 0.09), transparent 60%),
+    radial-gradient(900px 700px at 90% 92%, rgba(167, 139, 250, 0.12), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
 }
 
 /* ── Hero ── */
@@ -41,11 +47,6 @@ body {
   justify-content: center;
   text-align: center;
   padding: 56px 20px;
-  background:
-    radial-gradient(900px 520px at 50% -8%, rgba(34, 211, 238, 0.20), transparent 62%),
-    radial-gradient(820px 620px at 85% 20%, rgba(99, 102, 241, 0.30), transparent 60%),
-    radial-gradient(760px 620px at 8% 86%, rgba(167, 139, 250, 0.28), transparent 60%),
-    var(--bg);
   color: #eef2fb;
   overflow: hidden;
 }
@@ -230,7 +231,7 @@ body {
 
 /* ── RSVP ── */
 .rsvp-section {
-  background: var(--bg);
+  background: transparent;
   padding: 0 20px 64px;
   display: flex;
   justify-content: center;
@@ -303,11 +304,7 @@ body {
 
 /* ── Wishlist section ── */
 .wishlist-section {
-  background:
-    radial-gradient(1000px 600px at 80% 8%, rgba(99, 102, 241, 0.14), transparent 60%),
-    radial-gradient(900px 600px at 10% 50%, rgba(34, 211, 238, 0.08), transparent 60%),
-    radial-gradient(900px 700px at 90% 95%, rgba(167, 139, 250, 0.10), transparent 60%),
-    var(--bg);
+  background: transparent;
   padding: 84px 20px 110px;
   color: var(--light);
 }
@@ -518,7 +515,7 @@ body {
 
 /* ── Footer ── */
 footer {
-  background: var(--bg);
+  background: transparent;
   color: rgba(255, 255, 255, 0.7);
   text-align: center;
   padding: 32px 20px;
