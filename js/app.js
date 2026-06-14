@@ -54,6 +54,43 @@ function placeholderSVG(emoji) {
 let bookings = {};
 let myItems = [];
 
+// ── Состояние фильтров wish-листа ──────────────────────────────────
+let activeTier = "all"; // "all" | ключ тира
+let freeOnly = false;   // показывать только не забронированные
+
+function renderFilters() {
+  const bar = document.getElementById("wl-filters");
+  if (!bar) return;
+  const tiers = window.WISHLIST_TIERS || [];
+  const tabs = [{ key: "all", label: "Все" }, ...tiers.map((t) => ({ key: t.key, label: t.label }))];
+  bar.innerHTML = `
+    <div class="wl-tabs">
+      ${tabs
+        .map(
+          (t) =>
+            `<button class="wl-tab ${t.key === activeTier ? "is-active" : ""}" data-tier="${t.key}">${t.label}</button>`
+        )
+        .join("")}
+    </div>
+    <label class="wl-toggle">
+      <input type="checkbox" id="wl-free-only" ${freeOnly ? "checked" : ""}>
+      <span>Только свободные</span>
+    </label>`;
+
+  bar.querySelectorAll(".wl-tab").forEach((b) =>
+    b.addEventListener("click", () => {
+      activeTier = b.dataset.tier;
+      renderFilters();
+      renderWishlist();
+    })
+  );
+  const chk = bar.querySelector("#wl-free-only");
+  if (chk) chk.addEventListener("change", (e) => {
+    freeOnly = e.target.checked;
+    renderWishlist();
+  });
+}
+
 function cardTemplate(item) {
   const isReserved = Boolean(bookings[item.id]);
   const isMine = myItems.includes(item.id);
@@ -92,10 +129,13 @@ function cardTemplate(item) {
 
 function renderWishlist() {
   const container = document.getElementById("wishlist");
-  const tiers = window.WISHLIST_TIERS || [{ key: null, label: "", range: "" }];
-  container.innerHTML = tiers
+  const tiers = (window.WISHLIST_TIERS || [{ key: null, label: "", range: "" }]).filter(
+    (t) => activeTier === "all" || t.key === activeTier
+  );
+  const html = tiers
     .map((t) => {
-      const items = window.WISHLIST.filter((i) => i.tier === t.key);
+      let items = window.WISHLIST.filter((i) => i.tier === t.key);
+      if (freeOnly) items = items.filter((i) => !bookings[i.id]);
       if (!items.length) return "";
       return `
         <div class="tier">
@@ -107,6 +147,8 @@ function renderWishlist() {
         </div>`;
     })
     .join("");
+  container.innerHTML =
+    html || `<p class="wl-empty">В этом блоке нет свободных позиций 🙂</p>`;
 }
 
 async function refresh() {
@@ -267,6 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(tickCountdown, 1000);
 
   document.getElementById("wishlist").addEventListener("click", onGridClick);
+  renderFilters();
   refresh();
   renderRsvp();
   initCalendar();

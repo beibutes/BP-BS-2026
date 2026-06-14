@@ -359,6 +359,65 @@ body {
   color: var(--muted-light);
 }
 
+/* ── Фильтры wish-листа ── */
+.wl-filters {
+  max-width: 1080px;
+  margin: -16px auto 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 18px;
+}
+.wl-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.wl-tab {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--light);
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(214, 188, 150, 0.25);
+  background: rgba(255, 240, 220, 0.05);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.wl-tab:hover {
+  background: rgba(224, 151, 92, 0.16);
+}
+.wl-tab.is-active {
+  color: #2a1f15;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.wl-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--light);
+  cursor: pointer;
+  user-select: none;
+}
+.wl-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.wl-empty {
+  text-align: center;
+  color: var(--muted-light);
+  padding: 36px 0;
+  font-size: 17px;
+}
+
 .tier {
   max-width: 1080px;
   margin: 0 auto 52px;
