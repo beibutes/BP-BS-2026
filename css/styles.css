@@ -7,8 +7,12 @@
   --accent-3: #a78bfa; /* фиолет */
   --ink: #0f172a;
   --muted: #64748b;
+  --muted-light: #9aa6bd; /* приглушённый текст на тёмном фоне */
+  --light: #eef2fb;       /* основной текст на тёмном фоне */
   --gold: #5eead4;     /* мятно-циановый акцент (даты, имена) */
   --line: #e2e8f0;
+  --line-d: rgba(148, 163, 184, 0.16); /* границы на тёмном */
+  --card-d: rgba(255, 255, 255, 0.045); /* стекло-карточка на тёмном */
   --font: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-display: "Space Grotesk", var(--font);
 }
@@ -302,42 +306,46 @@ body {
 /* ── Wishlist section ── */
 .wishlist-section {
   background:
-    radial-gradient(900px 400px at 50% -5%, rgba(99, 102, 241, 0.06), transparent 60%),
-    #f6f8fc;
-  padding: 76px 20px 100px;
+    radial-gradient(1000px 600px at 80% 8%, rgba(99, 102, 241, 0.14), transparent 60%),
+    radial-gradient(900px 600px at 10% 50%, rgba(34, 211, 238, 0.08), transparent 60%),
+    radial-gradient(900px 700px at 90% 95%, rgba(167, 139, 250, 0.10), transparent 60%),
+    var(--bg);
+  padding: 84px 20px 110px;
+  color: var(--light);
 }
 .section-head {
   max-width: 720px;
-  margin: 0 auto 44px;
+  margin: 0 auto 48px;
   text-align: center;
 }
 .section-head h2 {
   font-family: var(--font-display);
-  font-size: clamp(30px, 5vw, 44px);
+  font-size: clamp(30px, 5vw, 46px);
   letter-spacing: -0.02em;
   margin-bottom: 12px;
+  color: var(--light);
 }
 .section-head p {
-  color: var(--muted);
+  color: var(--muted-light);
 }
 
 .tier {
   max-width: 1080px;
-  margin: 0 auto 48px;
+  margin: 0 auto 52px;
 }
 .tier-head {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  margin: 0 0 20px;
+  margin: 0 0 22px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-d);
 }
 .tier-head h3 {
   font-family: var(--font-display);
   font-size: 23px;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--light);
   position: relative;
   padding-left: 14px;
 }
@@ -353,7 +361,7 @@ body {
 }
 .tier-range {
   font-size: 13px;
-  color: var(--muted);
+  color: var(--muted-light);
   font-variant-numeric: tabular-nums;
 }
 .grid {
@@ -377,25 +385,26 @@ body {
 }
 
 .card {
-  background: var(--card);
-  border: 1px solid var(--line);
+  background: var(--card-d);
+  border: 1px solid var(--line-d);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 44px rgba(99, 102, 241, 0.16);
-  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 22px 48px rgba(99, 102, 241, 0.28);
+  border-color: rgba(99, 102, 241, 0.45);
 }
 
 .card-img {
   position: relative;
   aspect-ratio: 4 / 3;
-  background: #eee;
+  background: #0c1322;
 }
 .card-img img {
   width: 100%;
@@ -403,13 +412,13 @@ body {
   object-fit: cover;
   display: block;
 }
-/* точное фото товара на белом — показываем целиком */
+/* точное фото товара — показываем целиком на светлой панели */
 .card-img--contain {
-  background: #fff;
+  background: #eef2f7;
 }
 .card-img--contain img {
   object-fit: contain;
-  padding: 10px;
+  padding: 12px;
 }
 .card.is-reserved .card-img img {
   filter: grayscale(1) brightness(0.95);
@@ -418,25 +427,27 @@ body {
   opacity: 0.92;
 }
 .card.is-mine {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-2);
   outline-offset: -2px;
   opacity: 1;
 }
 .card.is-mine .reserved-note {
-  color: var(--accent);
+  color: var(--accent-2);
   font-weight: 600;
 }
 .badge {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: var(--ink);
+  background: rgba(7, 11, 20, 0.78);
+  border: 1px solid var(--line-d);
   color: #fff;
   font-size: 12px;
   font-weight: 600;
   padding: 6px 12px;
   border-radius: 999px;
   letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
 }
 
 .card-body {
@@ -451,26 +462,27 @@ body {
   font-size: 19px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: var(--light);
 }
 .card-desc {
-  color: var(--muted);
+  color: var(--muted-light);
   font-size: 14px;
   flex: 1;
 }
 .price {
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent-2);
   margin-top: 4px;
   font-variant-numeric: tabular-nums;
 }
 .reserved-note {
   font-size: 14px;
-  color: var(--muted);
+  color: var(--muted-light);
 }
 .card-link {
   font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-2);
   text-decoration: none;
 }
 .card-link:hover {
@@ -495,15 +507,15 @@ body {
   box-shadow: 0 10px 24px rgba(99, 102, 241, 0.4);
 }
 .btn-ghost {
-  background: transparent;
-  color: var(--muted);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--light);
+  border: 1px solid var(--line-d);
   box-shadow: none;
 }
 .btn-ghost:hover {
   transform: none;
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--accent-2);
+  color: var(--accent-2);
 }
 
 /* ── Footer ── */

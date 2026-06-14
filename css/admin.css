@@ -1,6 +1,10 @@
 .admin-body {
-  background: #f4f1fb;
   min-height: 100vh;
+  color: var(--light);
+  background:
+    radial-gradient(900px 500px at 80% -5%, rgba(99, 102, 241, 0.16), transparent 60%),
+    radial-gradient(800px 600px at 5% 100%, rgba(167, 139, 250, 0.12), transparent 60%),
+    var(--bg);
 }
 
 /* Атрибут hidden должен перекрывать display из классов (.login-screen/.dashboard) */
@@ -15,42 +19,52 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background:
-    radial-gradient(800px 400px at 50% -10%, rgba(179, 136, 255, 0.35), transparent 60%),
-    var(--bg);
 }
 .login-card {
-  background: #fff;
+  background: var(--card-d);
+  border: 1px solid var(--line-d);
+  backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 36px 30px;
   width: 100%;
   max-width: 380px;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
 }
 .login-card h1 {
+  font-family: var(--font-display);
   font-size: 24px;
   margin-bottom: 8px;
+  color: var(--light);
 }
 .login-card p {
-  color: var(--muted);
+  color: var(--muted-light);
   font-size: 14px;
   margin-bottom: 18px;
 }
 .login-card input {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid #ddd6f0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-d);
   border-radius: 12px;
   font-size: 16px;
+  color: var(--light);
   margin-bottom: 14px;
+}
+.login-card input::placeholder {
+  color: var(--muted-light);
+}
+.login-card input:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 .login-card .btn {
   width: 100%;
   margin: 0;
 }
 .login-error {
-  color: #e0245e;
+  color: #ff6b8a;
   font-size: 14px;
   min-height: 18px;
   margin-top: 10px;
@@ -58,9 +72,9 @@
 
 /* ── Дашборд ── */
 .dashboard {
-  max-width: 1000px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 28px 20px 80px;
+  padding: 30px 20px 90px;
 }
 .dash-head {
   display: flex;
@@ -68,10 +82,12 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 .dash-head h1 {
+  font-family: var(--font-display);
   font-size: 26px;
+  color: var(--light);
 }
 .dash-actions {
   display: flex;
@@ -91,82 +107,91 @@
   margin-bottom: 28px;
 }
 .stat-card {
-  background: #fff;
+  background: var(--card-d);
+  border: 1px solid var(--line-d);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 6px 20px rgba(36, 27, 58, 0.06);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
 }
 .stat-value {
+  font-family: var(--font-display);
   font-size: 30px;
-  font-weight: 800;
-  color: var(--ink);
+  font-weight: 700;
+  color: var(--light);
 }
 .stat-label {
   font-size: 14px;
-  color: var(--ink);
+  color: var(--light);
   margin-top: 4px;
 }
 .stat-hint {
   font-size: 12px;
-  color: var(--muted);
+  color: var(--muted-light);
   margin-top: 2px;
 }
 
 /* ── Панели/таблицы ── */
 .panel {
-  background: #fff;
+  background: var(--card-d);
+  border: 1px solid var(--line-d);
+  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 22px;
   margin-bottom: 22px;
-  box-shadow: 0 6px 20px rgba(36, 27, 58, 0.06);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
 }
 .panel h2 {
+  font-family: var(--font-display);
   font-size: 19px;
   margin-bottom: 14px;
+  color: var(--light);
 }
 .data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  color: var(--light);
 }
 .data-table th,
 .data-table td {
   text-align: left;
   padding: 10px 12px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--line-d);
 }
 .data-table th {
-  color: var(--muted);
+  color: var(--muted-light);
   font-weight: 600;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 .data-table code {
-  background: #f1edfb;
+  background: rgba(99, 102, 241, 0.18);
+  color: #c7d2fe;
   padding: 2px 6px;
   border-radius: 6px;
   font-size: 12px;
 }
 .empty {
-  color: var(--muted);
+  color: var(--muted-light);
   font-size: 14px;
   padding: 8px 0;
 }
 .row-declined {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 .btn-mini {
-  border: 1px solid #ddd6f0;
-  background: #fff;
-  color: var(--muted);
+  border: 1px solid var(--line-d);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted-light);
   border-radius: 8px;
   padding: 6px 10px;
   font-size: 13px;
   cursor: pointer;
 }
 .btn-mini:hover {
-  background: #faf7ff;
-  color: #e0245e;
-  border-color: #f3c6d6;
+  background: rgba(224, 36, 94, 0.12);
+  color: #ff6b8a;
+  border-color: rgba(224, 36, 94, 0.4);
 }
