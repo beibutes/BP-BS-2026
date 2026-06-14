@@ -170,7 +170,7 @@ window.WISHLIST = [
     "tier": "premium",
     "top": false,
     "emoji": "🚲",
-    "img": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=640&q=80",
+    "img": "img/products/canyon-endurace.jpg",
     "url": "https://www.canyon.com/en-us/road-bikes/endurance-bikes/endurace/"
   },
   {

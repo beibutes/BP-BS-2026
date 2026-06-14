@@ -40,7 +40,7 @@ const CATALOG = [
     img: LOCAL("book-7-powers.jpg"), url: "https://7powers.com/" },
   { match: ["canyon", "endurace"], id: "canyon-endurace", emoji: "🚲", title: "Canyon Endurace CF 8",
     desc: "Шоссейный велосипед: карбон, Shimano 105 Di2.",
-    img: IMG("photo-1485965120184-e220f721d03e"), url: "https://www.canyon.com/en-us/road-bikes/endurance-bikes/endurace/" },
+    img: LOCAL("canyon-endurace.jpg"), url: "https://www.canyon.com/en-us/road-bikes/endurance-bikes/endurace/" },
   { match: ["bambu"], id: "bambu-p1s", emoji: "🖨️", title: "Bambu Lab P1S",
     desc: "3D-принтер: многоцветная печать, Combo с AMS.",
     img: LOCAL("bambu-p1s.jpg"), url: "https://bambulab.com/en/p1" },
