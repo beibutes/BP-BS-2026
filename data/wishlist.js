@@ -192,8 +192,8 @@ window.WISHLIST = [
     "tier": "premium",
     "top": false,
     "emoji": "🧥",
-    "img": "https://images.unsplash.com/photo-1558997519-83ea9252edf8?w=640&q=80",
-    "url": "https://www.lg.com/us/lg-styler"
+    "img": "img/products/airdresser.jpg",
+    "url": "https://www.samsung.com/us/home-appliances/airdresser/"
   },
   {
     "id": "wine-fridge",

@@ -88,7 +88,7 @@ const CATALOG = [
     img: LOCAL("airpods-max.png"), url: "https://www.apple.com/airpods-max/" },
   { match: ["паровой шкаф", "styler", "airdresser"], id: "steam-closet", emoji: "🧥", title: "Паровой шкаф LG Styler / Samsung AirDresser",
     desc: "Уход за костюмами без химчистки.",
-    img: IMG("photo-1558997519-83ea9252edf8"), url: "https://www.lg.com/us/lg-styler" },
+    img: LOCAL("airdresser.jpg"), url: "https://www.samsung.com/us/home-appliances/airdresser/" },
 ];
 
 const TIERS = [
