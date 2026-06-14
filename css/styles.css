@@ -42,7 +42,7 @@ body {
     radial-gradient(820px 640px at 88% 60%, rgba(99, 102, 241, 0.30), transparent 60%),
     radial-gradient(760px 640px at 6% 92%, rgba(167, 139, 250, 0.30), transparent 60%),
     linear-gradient(180deg, rgba(7, 11, 20, 0.05) 0%, rgba(7, 11, 20, 0) 28%, rgba(7, 11, 20, 0.45) 50%, rgba(7, 11, 20, 0.88) 72%, rgba(7, 11, 20, 0.98) 100%),
-    url("../img/hero-bg.jpg") center top / cover no-repeat,
+    url("../img/hero-bg.jpg?v=2") center top / cover no-repeat,
     var(--bg);
   color: #eef2fb;
   overflow: hidden;
