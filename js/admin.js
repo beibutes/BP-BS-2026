@@ -147,7 +147,7 @@ function renderRsvps(rsvps) {
       <td>${i + 1}</td>
       <td><b>${r.name}</b></td>
       <td>${r.coming ? "✅ Придёт" : "✖ Не придёт"}</td>
-      <td>${r.coming && r.with_partner ? "💑 Да" : "—"}</td>
+      <td>${r.coming && r.with_partner ? "💑 " + (r.partner_name || "Да") : "—"}</td>
       <td>${fmtDate(r.created_at)}</td>
     </tr>`
     )

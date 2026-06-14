@@ -216,7 +216,7 @@ async function renderRsvp() {
   if (r && r.name && r.coming) {
     // Придёт
     const partnerNote = r.with_partner
-      ? ' <span class="rsvp-partner">+ вторая половинка</span>'
+      ? ` <span class="rsvp-partner">+ вторая половинка${r.partner_name ? ": " + r.partner_name : ""}</span>`
       : "";
     box.innerHTML = `
       <p class="rsvp-status">Уважаемый(ая) <b>${r.name}</b>${partnerNote}, спасибо, что подтвердили участие. Буду ждать Вас!</p>
@@ -245,7 +245,13 @@ async function renderRsvp() {
     const respond = async (withPartner, coming) => {
       const n = prompt("Как вас записать? Имя и фамилия:");
       if (!n || !n.trim()) return;
-      await store.rsvpSet(getVisitorId(), n.trim(), withPartner, coming);
+      let partnerName = null;
+      if (withPartner) {
+        const p = prompt("Имя второй половинки:");
+        if (!p || !p.trim()) return; // обязательно при ответе «со второй половинкой»
+        partnerName = p.trim();
+      }
+      await store.rsvpSet(getVisitorId(), n.trim(), withPartner, coming, partnerName);
       renderRsvp();
     };
     document.getElementById("rsvp-partner").addEventListener("click", () => respond(true, true));
